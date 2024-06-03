@@ -21,9 +21,10 @@ typedef int32_t i32;
 typedef int64_t i64;
 typedef ptrdiff_t iZ;
 
-inline uLL operator""_KB(uLL s) { return s << 10; }
-inline uLL operator""_MB(uLL s) { return s << 20; }
-inline uLL operator""_GB(uLL s) { return s << 30; }
+// NOTE - Will return negative values for big numbers, so don't do that
+inline iZ operator""_KB(uLL s) { return (iZ)(s << 10); }
+inline iZ operator""_MB(uLL s) { return (iZ)(s << 20); }
+inline iZ operator""_GB(uLL s) { return (iZ)(s << 30); }
 
 template <class T>
 const T &min(const T &a, const T &b) {
