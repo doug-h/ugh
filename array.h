@@ -11,11 +11,6 @@ struct array {
   T *tail = 0;
   iZ cap = 0;
 
-  array() = default;
-
-  template <uZ N, std::enable_if_t<((iZ)(N) > 0), int> = 0>
-  array(T (&t)[N]) : base(&(t[0])), tail(&(t[N])), cap((iZ)(N)) {}
-
   void push(T v) { *tail++ = v; }
   T pop() { return *--tail; }
   void clear() { tail = base; }
@@ -26,6 +21,11 @@ struct array {
   bool isempty() const { return size() == 0; }
   bool isfull() const { return free() == 0; }
 };
+
+template <class T, uZ N, std::enable_if_t<((iZ)(N) > 0), int> = 0>
+array<T> new_array(T (&t)[N]) {
+  return {.base = &(t[0]), .tail=&(t[N]), .cap=(iZ)(N)};
+}
 
 template <class T>
 array<T> new_array(arena *a, iZ cap) {
