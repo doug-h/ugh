@@ -12,8 +12,9 @@ struct array {
   iZ cap = 0;
 
   array() = default;
-  template <iZ N>
-  array(T (&t)[N]) : base(&(t[0])), tail(&(t[N])), cap(N) {}
+
+  template <uZ N, std::enable_if_t<((iZ)(N) > 0), int> = 0>
+  array(T (&t)[N]) : base(&(t[0])), tail(&(t[N])), cap((iZ)(N)) {}
 
   void push(T v) { *tail++ = v; }
   T pop() { return *--tail; }
