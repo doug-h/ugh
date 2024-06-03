@@ -26,6 +26,11 @@ inline iZ operator""_KB(uLL s) { return (iZ)(s << 10); }
 inline iZ operator""_MB(uLL s) { return (iZ)(s << 20); }
 inline iZ operator""_GB(uLL s) { return (iZ)(s << 30); }
 
+typedef float f32;
+typedef double f64;
+static_assert(sizeof(float) == 4);
+static_assert(sizeof(double) == 8);
+
 template <class T>
 const T &min(const T &a, const T &b) {
   return (b < a) ? b : a;
