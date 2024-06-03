@@ -29,7 +29,7 @@ array<T> new_array(T (&t)[N]) {
 
 template <class T>
 array<T> new_array(arena *a, iZ cap) {
-  T *store = arena_push<T>(a, cap);
+  T *store = arena_push<T>(a, (uZ)cap);
   ASSERT(store);
   return {.base = store, .tail = store, .cap = cap};
 }

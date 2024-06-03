@@ -13,7 +13,7 @@ static arena new_arena(iZ size);
 static void free_arena(arena *a);
 
 template <class T>
-static T *arena_push(arena *, iZ num_T);
+static T *arena_push(arena *, uZ num_T);
 static u8 *arena_push_bytes(arena *, iZ num_bytes, uZ align = 1);
 
 static arena arena_split(arena *a, iZ num_bytes);
@@ -46,9 +46,9 @@ static u8 *arena_push_bytes(arena *a, iZ num_bytes, uZ align) {
 }
 
 template <class T>
-static T *arena_push(arena *a, iZ num_T) {
+static T *arena_push(arena *a, uZ num_T) {
   ASSERT(num_T < PTRDIFF_MAX / sizeof(T));
-  return (T *)arena_push_bytes(a, num_T * (iZ)sizeof(T), alignof(T));
+  return (T *)arena_push_bytes(a, (iZ)(num_T * sizeof(T)), alignof(T));
 }
 
 static arena arena_split(arena *a, iZ num_bytes) {
