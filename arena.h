@@ -12,8 +12,8 @@ struct arena {
 static arena new_arena(iZ size);
 static void free_arena(arena *a);
 
-template <class T>
-static T *arena_push(arena *, uZ num_T);
+template <class T = u8>
+static T *arena_push(arena *, uZ num_T = 1);
 static u8 *arena_push_bytes(arena *, iZ num_bytes, uZ align = 1);
 
 static arena arena_split(arena *a, iZ num_bytes);
