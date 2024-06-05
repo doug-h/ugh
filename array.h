@@ -33,9 +33,3 @@ array<T> new_array(arena *a, iZ cap) {
   ASSERT(store);
   return {.base = store, .tail = store, .cap = cap};
 }
-template <class T>
-void free_array(array<T> *a) {
-  ASSERT(a->base);
-  free(a->base);
-  a->cap = 0;
-}
