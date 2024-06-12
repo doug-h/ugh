@@ -3,6 +3,7 @@
 #include <cassert>
 #include <cstddef>
 #include <cstdint>
+#include <cstdlib>
 
 typedef uint8_t u8;
 typedef uint16_t u16;
@@ -45,3 +46,16 @@ template <class T>
 const T &max(const T &a, const T &b) {
   return (a < b) ? b : a;
 }
+
+constexpr int modp(int i, int n) { return (i % n + n) % n; }
+
+float rescale(float lo0, float hi0, float lo1, float hi1, float t) { 
+  return (t - lo0) / (hi0 - lo0) * (hi1 - lo1) + lo1; 
+}
+
+float rescale(float lo, float hi, float t) {
+  return rescale(0, 1, lo, hi, t);
+}
+
+float randf() { return (float)(rand()) / (float)(RAND_MAX); }
+float randf(float lo, float hi) { return rescale(lo, hi, randf()); }
