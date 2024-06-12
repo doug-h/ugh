@@ -13,7 +13,7 @@ struct array {
   T *tail = 0;
   iZ cap = 0;
 
-  void push(T v) { *tail++ = v; }
+  void push(T v) { *tail++ = v; ASSERT(tail <= base + cap); }
   T pop() { return *--tail; }
   void clear() { tail = base; }
   void erase(iZ i) { base[i] = *--tail; }
