@@ -3,6 +3,8 @@
 #include "types.h"
 #include "arena.h"
 
+#include <type_traits>
+
 // Contiguous fixed size array, with swap&pop erase
 // Doesn't hold the data, just points to it.
 template <class T>
