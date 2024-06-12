@@ -18,10 +18,10 @@ struct array {
   void clear() { tail = base; }
   void erase(iZ i) { base[i] = *--tail; }
 
-  iZ size() const { return tail - base; }
-  iZ free() const { return cap - size(); }
-  bool isempty() const { return size() == 0; }
-  bool isfull() const { return free() == 0; }
+  iZ count() const { return tail - base; }
+  iZ unused() const { return cap - count(); }
+  bool isempty() const { return count() == 0; }
+  bool isfull() const { return unused() == 0; }
 };
 
 template <class T, uZ N, std::enable_if_t<((iZ)(N) > 0), int> = 0>
