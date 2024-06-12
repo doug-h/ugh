@@ -4,8 +4,6 @@
 #include <cstddef>
 #include <cstdint>
 
-#define ASSERT(c) assert((c))
-
 typedef uint8_t u8;
 typedef uint16_t u16;
 typedef uint32_t u32;
@@ -20,6 +18,12 @@ typedef int16_t i16;
 typedef int32_t i32;
 typedef int64_t i64;
 typedef ptrdiff_t iZ;
+
+#ifdef BETTER_ASSERT
+#define ASSERT(c)  while (!(c)) __builtin_unreachable()
+#else
+#define ASSERT(c) assert(c)
+#endif
 
 // NOTE - Will return negative values for big numbers, so don't do that
 inline iZ operator""_KB(uLL s) { return (iZ)(s << 10); }
