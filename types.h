@@ -26,6 +26,7 @@ typedef ptrdiff_t iZ;
 #endif
 
 // NOTE - Will return negative values for big numbers, so don't do that
+// NOTE - On 32bit systems (like Emscripten) 'big numbers' is smaller than you think
 inline iZ operator""_KB(uLL s) { return (iZ)(s << 10); }
 inline iZ operator""_MB(uLL s) { return (iZ)(s << 20); }
 inline iZ operator""_GB(uLL s) { return (iZ)(s << 30); }
