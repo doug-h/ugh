@@ -17,6 +17,8 @@ struct array {
   T pop() { return *--tail; }
   void clear() { tail = base; }
   void erase(iZ i) { base[i] = *--tail; }
+  T* first() const { return base; }
+  T* last() const { return (tail - 1); }
 
   iZ count() const { return tail - base; }
   iZ unused() const { return cap - count(); }
