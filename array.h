@@ -9,9 +9,9 @@
 // Doesn't hold the data, just points to it.
 template <class T>
 struct array {
-  T *base = 0;
-  T *tail = 0;
-  iZ cap = 0;
+  T *base;
+  T *tail;
+  iZ cap;
 
   void push(T v) { *tail++ = v; ASSERT(tail <= base + cap); }
   T pop() { return *--tail; }
@@ -24,16 +24,16 @@ struct array {
   iZ unused() const { return cap - count(); }
   bool isempty() const { return count() == 0; }
   bool isfull() const { return unused() == 0; }
+
+  array() : base(0), tail(0), cap(0) {}
+
+  template <uZ N, std::enable_if_t<((iZ)(N) > 0), int> = 0>
+  array(T (&t)[N]) : base(&(t[0])), tail(&(t[N])), cap((iZ)(N)) {}
+
+  array(arena* a, iZ cap) : cap(cap) {
+    T* _data = arena_push<T>(a, (uZ)cap);
+    base = tail = _data;
+  }
 };
-
-template <class T, uZ N, std::enable_if_t<((iZ)(N) > 0), int> = 0>
-array<T> new_array(T (&t)[N]) {
-  return {.base = &(t[0]), .tail=&(t[N]), .cap=(iZ)(N)};
-}
-
 template <class T>
-array<T> new_array(arena *a, iZ cap) {
-  T *store = arena_push<T>(a, (uZ)cap);
-  ASSERT(store);
-  return {.base = store, .tail = store, .cap = cap};
 }
