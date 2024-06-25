@@ -14,7 +14,10 @@ struct array {
   iZ cap;
 
   T* push(T v) { *tail++ = v; ASSERT(tail <= base + cap); return (tail - 1); }
+  T* push(array<T>);
+
   T pop() { return *--tail; }
+
   void clear() { tail = base; }
   void erase(iZ i) { base[i] = *--tail; }
   void erase(T* t) { ASSERT(t >= base && t < tail); *t = *--tail; }
@@ -37,5 +40,13 @@ struct array {
     base = tail = _data;
   }
 };
+
 template <class T>
+T* array<T>::push(array<T> other) {
+  ASSERT(other.count() > 0);
+  ASSERT(other.count() <= this->unused());
+  memcpy(this->tail, other.base, other.count() * sizeof(T));
+  T* first = this->tail;
+  this->tail += other.count();
+  return first;
 }
