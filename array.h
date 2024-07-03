@@ -4,11 +4,12 @@
 #include "arena.h"
 
 #include <type_traits>
+#include <ranges>
 
 // Contiguous fixed size array, with swap&pop erase
 // Doesn't hold the data, just points to it.
 template <class T>
-struct array {
+struct array : std::ranges::view_interface<array<T>> {
   T *base;
   T *tail;
   iZ cap;
@@ -27,9 +28,12 @@ struct array {
   T* first() const { return base; }
   T* last() const { return (tail - 1); }
 
-  iZ count() const { return tail - base; }
+  T* begin() const { return base; }
+  T* end() const { return tail; }
+
+  iZ count() const { return this->size(); }
   iZ unused() const { return cap - count(); }
-  bool isempty() const { return count() == 0; }
+  bool isempty() const { return this->empty(); }
   bool isfull() const { return unused() == 0; }
 
   array() : base(0), tail(0), cap(0) {}
@@ -56,6 +60,12 @@ array<T> array<T>::slice(iZ start, iZ end) const {
   ASSERT(result.tail <= this->tail);
   return result;
 }
+
+static_assert(std::ranges::range<array<int>>);
+static_assert(std::ranges::sized_range<array<int>>);
+static_assert(std::ranges::contiguous_range<array<int>>);
+static_assert(std::ranges::view<array<int>>);
+
 template <class T>
 T* array<T>::push(array<T> other) {
   ASSERT(other.count() > 0);
