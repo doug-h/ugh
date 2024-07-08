@@ -25,8 +25,6 @@ struct string {
   string(const char (&s)[N]) : head{(u8 *)s}, tail{(u8 *)&(s[N - 1])} {}
 };
 
-void print(string s) { printf("%.*s", (int)s.len(), s.head); }
-
 // Stores an extra \0 at the end
 string new_string(arena *a, uZ length) {
   u8 *head = arena_push(a, length + 1);
@@ -36,6 +34,9 @@ string new_string(arena *a, uZ length) {
   *tail = '\0';
   return string(head, tail);
 };
+
+
+void print(string s) { printf("%.*s", (int)s.len(), s.head); }
 
 //
 //
