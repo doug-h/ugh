@@ -20,17 +20,14 @@ struct string {
   bool operator==(string);
   string slice(iZ start, iZ end);
 
-  // NOTE - This should be used to construct from c string, so "abc" converts to
-  // 'const char (&s)[4]', head points to s[0] == 'a' and tail points to s[3] ==
-  // '\0'. Even though it accepts a straight char array DON'T DO THAT unless
-  // the char array is null terminated, as it will miss the last char.
+  // This can be used to construct from string literal
   template <uZ N, std::enable_if_t<((iZ)(N) > 0), int> = 0>
   string(const char (&s)[N]) : head{(u8 *)s}, tail{(u8 *)&(s[N - 1])} {}
 };
 
 void print(string s) { printf("%.*s", (int)s.len(), s.head); }
 
-// Adds an extra null byte for c
+// Stores an extra \0 at the end
 string new_string(arena *a, uZ length) {
   u8 *head = arena_push(a, length + 1);
   ASSERT(head);
