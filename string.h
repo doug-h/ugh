@@ -36,6 +36,25 @@ string new_string(arena *a, uZ length) {
 };
 
 
+string string_conc(arena* a, string s1, string s2) {
+  string result = new_string(a, s1.len() + s2.len());
+  memcpy(result.head, s1.head, s1.len());
+  memcpy(result.head+s1.len(), s2.head, s2.len());
+  return result;
+}
+string string_from_c(const char* c, iZ max_length = (1 << 16)){
+  const char* last = c;
+  while(*last && last < c + max_length) {
+    ++last;
+  }
+
+  string result;
+  result.head = (u8*)c;
+  result.tail = (u8*)last;
+
+  return result;
+}
+
 void print(string s) { printf("%.*s", (int)s.len(), s.head); }
 
 //
