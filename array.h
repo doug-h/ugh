@@ -32,9 +32,9 @@ struct array : std::ranges::view_interface<array<T>> {
   T* end() const { return tail; }
 
   iZ count() const { return this->size(); }
-  iZ unused() const { return cap - count(); }
+  iZ unused() const { return cap - this->size(); }
   bool isempty() const { return this->empty(); }
-  bool isfull() const { return unused() == 0; }
+  bool isfull() const { return cap == this->size(); }
 
   array() : base(0), tail(0), cap(0) {}
 
