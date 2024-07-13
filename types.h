@@ -4,6 +4,7 @@
 #include <cstddef>
 #include <cstdint>
 #include <cstdlib>
+#include <cmath>
 
 typedef uint8_t u8;
 typedef uint16_t u16;
@@ -49,12 +50,18 @@ const T &max(const T &a, const T &b) {
 
 constexpr int modp(int i, int n) { return (i % n + n) % n; }
 
+constexpr float fract(float x){ return x - floor(x); }
+
 float rescale(float lo0, float hi0, float lo1, float hi1, float t) { 
   return (t - lo0) / (hi0 - lo0) * (hi1 - lo1) + lo1; 
 }
 
 float rescale(float lo, float hi, float t) {
   return rescale(0, 1, lo, hi, t);
+}
+
+float clamp(float t, float lo, float hi){
+  return t < lo ? lo : t > hi ? hi : t;
 }
 
 float randf() { return (float)(rand()) / (float)(RAND_MAX); }
