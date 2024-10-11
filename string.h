@@ -8,7 +8,6 @@
 #include <type_traits>
 
 // Head points at first char, tail points one-past-the-end.
-// Usually we create these from c strings, so tail will point to a null char
 struct string {
   u8 *head = 0;
   u8 *tail = 0;
@@ -25,7 +24,6 @@ struct string {
   string(const char (&s)[N]) : head{(u8 *)s}, tail{(u8 *)&(s[N - 1])} {}
 };
 
-// Stores an extra \0 at the end
 string new_string(arena *a, uZ length) {
   u8 *head = arena_push(a, length + 1);
   ASSERT(head);
@@ -34,7 +32,6 @@ string new_string(arena *a, uZ length) {
   *tail = '\0';
   return string(head, tail);
 };
-
 
 string string_conc(arena* a, string s1, string s2) {
   string result = new_string(a, s1.len() + s2.len());

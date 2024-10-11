@@ -21,6 +21,7 @@ typedef int32_t i32;
 typedef int64_t i64;
 typedef ptrdiff_t iZ;
 
+// Plays nicer with gdb
 #ifdef BETTER_ASSERT
 #define ASSERT(c)  while (!(c)) __builtin_unreachable()
 #else
